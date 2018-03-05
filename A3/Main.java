@@ -13,8 +13,8 @@ public class Main {
 		queue=new Signalled_2Readers_Queue();
 		
 		new Writer(queue);
+		new ReaderIdentified(queue,2);
 		new ReaderIdentified(queue,1);
-		new ReaderIdentified(queue,0);
 	
 		
 	}

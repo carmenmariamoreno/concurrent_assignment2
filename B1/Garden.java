@@ -101,9 +101,10 @@ class Counter {
          while(wantsCS[1-ID]){
              if(turn==1-ID){
                  wantsCS[ID]=false;
-                 while(turn==1-ID);
+                 while(turn==1-ID){};
                  wantsCS[ID]=true;
              }
+        }
         int temp = value;   //read[v]
         CC.ForceCC();   
         value=temp+1;       //write[v+1]
@@ -111,7 +112,7 @@ class Counter {
         
         turn=1-ID;
         wantsCS[ID]=false;
-    }  
+      
     }
 }
 

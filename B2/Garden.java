@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.applet.*;
 import java.applet.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Garden extends Applet {
@@ -76,8 +78,8 @@ public class Garden extends Applet {
         
         counter = new Counter(counterD);
        
-        turnstile1= new Turnstile(turn1D,counter);
-        turnstile2= new Turnstile(turn2D,counter);
+        turnstile1= new Turnstile(turn1D,counter,0);
+        turnstile2= new Turnstile(turn2D,counter,1);
         turnstile1.start();
         turnstile2.start();
     }
@@ -88,17 +90,20 @@ class Counter {
 
     int value=0;
     NumberCanvas display;
-
+    
+    
     Counter(NumberCanvas n) {
         display=n;
         display.setvalue(value);
     }
 
-    void increment() {
+    synchronized void increment() {
         int temp = value;   //read[v]
         CC.ForceCC();
         value=temp+1;       //write[v+1]
+        
         display.setvalue(value);
+        notify();
     }
 }
 
@@ -108,9 +113,10 @@ class Counter {
 class Turnstile extends Thread {
   NumberCanvas display;
   Counter people;
-
-  Turnstile(NumberCanvas n,Counter c)
-    { display = n; people = c; }
+  int ID;
+  
+  Turnstile(NumberCanvas n,Counter c, int id1)
+    { display = n; people = c; ID=id1;}
 
   public void run() {
     try{
@@ -131,3 +137,4 @@ class CC {
             
     }
 }
+

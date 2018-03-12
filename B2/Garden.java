@@ -103,7 +103,7 @@ class Counter {
         value=temp+1;       //write[v+1]
         
         display.setvalue(value);
-        notify();
+        //notify();
     }
 }
 
